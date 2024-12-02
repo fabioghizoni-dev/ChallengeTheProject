@@ -25,7 +25,6 @@ object dtModule: TdtModule
     object t117_direitos_acessot117_ca_codigo: TWideStringField
       FieldName = 't117_ca_codigo'
       Origin = 't117_ca_codigo'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Size = 12
     end
     object t117_direitos_acessot117_ca_descricao: TWideStringField
@@ -50,12 +49,10 @@ object dtModule: TdtModule
     object t118_direitos_acesso_usuariost003_nr_codigo: TIntegerField
       FieldName = 't003_nr_codigo'
       Origin = 't003_nr_codigo'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
     end
     object t118_direitos_acesso_usuariost117_ca_codigo: TWideStringField
       FieldName = 't117_ca_codigo'
       Origin = 't117_ca_codigo'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Size = 12
     end
     object t118_direitos_acesso_usuariost118_ca_direito: TWideStringField
@@ -78,5 +75,55 @@ object dtModule: TdtModule
     DataSet = t118_direitos_acesso_usuarios
     Left = 456
     Top = 336
+  end
+  object QuerySave: TFDQuery
+    Connection = Conn
+    Left = 400
+    Top = 464
+  end
+  object QueryClearTable: TFDQuery
+    Connection = Conn
+    Left = 656
+    Top = 464
+  end
+  object QueryDelete: TFDQuery
+    Connection = Conn
+    Left = 568
+    Top = 464
+  end
+  object QueryRefresh: TFDQuery
+    Connection = Conn
+    Left = 480
+    Top = 464
+  end
+  object QueryCreate: TFDQuery
+    Connection = Conn
+    SQL.Strings = (
+      'CREATE TABLE IF NOT EXISTS public.t117_direitos_acesso ('
+      '    t117_ca_codigo varchar(12) NOT NULL,'
+      '    t117_ca_descricao varchar(250),'
+      '    t117_ca_nome_menu varchar(50),'
+      
+        '    CONSTRAINT t117_direitos_acesso_pkey PRIMARY KEY (t117_ca_co' +
+        'digo)'
+      ');'
+      '')
+    Left = 30
+    Top = 560
+  end
+  object dtCreate: TDataSource
+    DataSet = QueryCreate
+    Left = 32
+    Top = 616
+  end
+  object QueryInsert: TFDQuery
+    Connection = Conn
+    Left = 104
+    Top = 560
+  end
+  object dtInsert: TDataSource
+    DataSet = QueryInsert
+    Left = 104
+    Top = 616
   end
 end

@@ -20,12 +20,14 @@ object frmMain: TfrmMain
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitLeft = -8
+    ExplicitTop = -8
     object Grid: TDBGrid
       AlignWithMargins = True
       Left = 422
-      Top = 4
+      Top = 0
       Width = 685
-      Height = 337
+      Height = 373
       Margins.Left = 5
       Margins.Top = 5
       Margins.Right = 5
@@ -57,9 +59,9 @@ object frmMain: TfrmMain
     object Grid2: TDBGrid
       AlignWithMargins = True
       Left = 422
-      Top = 344
+      Top = 375
       Width = 685
-      Height = 337
+      Height = 368
       Margins.Left = 5
       Margins.Top = 5
       Margins.Right = 5
@@ -75,25 +77,21 @@ object frmMain: TfrmMain
         item
           Expanded = False
           FieldName = 't003_nr_codigo'
-          Width = 120
           Visible = True
         end
         item
           Expanded = False
           FieldName = 't117_ca_codigo'
-          Width = 130
           Visible = True
         end
         item
           Expanded = False
           FieldName = 't118_ca_direito'
-          Width = 120
           Visible = True
         end
         item
           Expanded = False
           FieldName = 't118_dt_ultima_alteracao'
-          Width = 200
           Visible = True
         end>
     end
@@ -546,37 +544,37 @@ object frmMain: TfrmMain
         720065006E0063006900610069007300}
     end
     object btnClear: TButton
-      Left = 550
-      Top = 689
-      Width = 113
-      Height = 56
+      Left = 536
+      Top = 744
+      Width = 127
+      Height = 65
       Caption = 'Clear'
       TabOrder = 3
       OnClick = btnClearClick
     end
     object btnDelete: TButton
       Left = 669
-      Top = 689
+      Top = 744
       Width = 113
-      Height = 56
+      Height = 65
       Caption = 'Delete'
       TabOrder = 4
       OnClick = btnDeleteClick
     end
     object btnRefresh: TButton
       Left = 788
-      Top = 689
+      Top = 744
       Width = 113
-      Height = 56
+      Height = 65
       Caption = 'Refresh'
       TabOrder = 5
       OnClick = btnRefreshClick
     end
     object btnSave: TButton
       Left = 907
-      Top = 689
-      Width = 113
-      Height = 56
+      Top = 744
+      Width = 118
+      Height = 65
       Caption = 'Save'
       TabOrder = 6
       OnClick = btnSaveClick
