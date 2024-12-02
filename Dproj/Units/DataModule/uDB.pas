@@ -57,6 +57,7 @@ type
   private
     { Private declarations }
   public
+    procedure Update(const NumeroID, CheckedID: String);
     procedure CreateTable;
     procedure allChecks(UnCheck, Check: TStringList);
     procedure ClearTable;
@@ -98,6 +99,24 @@ begin
     //dtModule.Free;
   end;
 
+end;
+
+procedure TdtModule.Update(const NumeroID, CheckedID: String);
+begin
+  try
+    QueryInsert.SQL.Text :=
+      'INSERT INTO t118_direitos_acesso_usuarios (t117_ca_codigo, t118_ca_direito, t118_dt_ultima_alteracao) ' +
+      'VALUES (:NumeroID, :CheckedID, null) ' +
+      'ON CONFLICT (t117_ca_codigo) DO UPDATE SET ' +
+      't118_ca_direito = EXCLUDED.t118_ca_direito, ' +
+      't118_dt_ultima_alteracao = EXCLUDED.t118_dt_ultima_alteracao;';
+    QueryInsert.ParamByName('NumeroID').AsString := NumeroID;
+    QueryInsert.ParamByName('CheckedID').AsString := CheckedID;
+    QueryInsert.ExecSQL;
+  except
+    on E: Exception do
+      ShowMessage('Erro ao atualizar direitos: ' + E.Message);
+  end;
 end;
 
 procedure TdtModule.Save;

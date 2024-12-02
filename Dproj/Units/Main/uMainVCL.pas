@@ -66,6 +66,7 @@ type
     function CriarTreeViewItem(Parent: TTreeNode; const Text, NumeroID: String)
       : TTreeNode;
     procedure ListartreeView;
+    procedure UpdateDB;
     { Private declarations }
   public
     { Public declarations }
@@ -94,6 +95,7 @@ end;
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
   ListartreeView;
+  UpdateDB;
 end;
 
 procedure TfrmMain.btnClearClick(Sender: TObject);
@@ -118,6 +120,30 @@ procedure TfrmMain.btnSaveClick(Sender: TObject);
 begin
   inherited;
   dtModule.Save;
+end;
+
+procedure TfrmMain.UpdateDB;
+var
+  I: Integer;
+  Node: TTreeNode;
+  Acesso: TAcesso;
+begin
+  for I := 0 to TreeView.Items.Count - 1 do
+  begin
+    Node := TreeView.Items[I];
+    Acesso := Node.Data;
+
+    if Assigned(Acesso) then
+    begin
+      if Node.Checked then
+        Acesso.CheckedID := 'S'
+      else
+        Acesso.CheckedID := 'N';
+
+      // Atualiza o banco de dados
+      dtModule.Update(Acesso.NumeroID, Acesso.CheckedID);
+    end;
+  end;
 end;
 
 function TfrmMain.CriarTreeViewItem(Parent: TTreeNode;
@@ -488,7 +514,6 @@ procedure TfrmMain.treeViewCheckStateChanged(Sender: TCustomTreeView;
 var
   Check, UnCheck: TStringList;
   Acesso: TAcesso;
-  i: Integer;
 begin
   inherited;
   Check := TStringList.Create;
@@ -520,9 +545,3 @@ begin
 end;
 
 end.
-
-
-
-
-
-
