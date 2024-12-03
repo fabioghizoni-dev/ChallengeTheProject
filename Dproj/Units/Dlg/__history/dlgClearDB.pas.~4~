@@ -1,0 +1,28 @@
+unit dlgClearDB;
+
+interface
+
+uses Winapi.Windows, System.SysUtils, System.Classes, Vcl.Graphics, Vcl.Forms,
+  Vcl.Controls, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.ButtonStylesAttributes,
+  Vcl.StyledButton;
+
+type
+  TdlgLimpaBanco = class(TForm)
+    btnClearDB: TStyledButton;
+    btnClearVisually: TStyledButton;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  dlgLimpaBanco: TdlgLimpaBanco;
+
+implementation
+
+{$R *.dfm}
+
+uses uDB;
+
+end.

@@ -1,0 +1,62 @@
+object dlgLimpaBanco: TdlgLimpaBanco
+  Left = 225
+  Top = 104
+  Margins.Left = 0
+  Margins.Top = 0
+  Margins.Right = 0
+  Margins.Bottom = 0
+  BorderStyle = bsDialog
+  Caption = 'Deseja limpar o banco?'
+  ClientHeight = 90
+  ClientWidth = 367
+  Color = clBtnShadow
+  CustomTitleBar.CaptionAlignment = taCenter
+  TransparentColorValue = clGray
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  KeyPreview = True
+  Position = poDesigned
+  RoundedCorners = rcOff
+  StyleElements = [seFont]
+  TextHeight = 15
+  object btnClearDB: TStyledButton
+    AlignWithMargins = True
+    Left = 5
+    Top = 5
+    Width = 172
+    Height = 80
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    Align = alLeft
+    Caption = 'Sim, Limpar Banco!'
+    TabOrder = 0
+    StyleElements = [seFont, seBorder]
+    OnClick = btnClearDBClick
+    StyleClass = 'Charcoal Dark Slate'
+    ExplicitHeight = 76
+  end
+  object btnClearVisually: TStyledButton
+    AlignWithMargins = True
+    Left = 180
+    Top = 5
+    Width = 182
+    Height = 80
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    Align = alRight
+    Caption = 'N'#227'o, Apenas Visualmente!'
+    TabOrder = 1
+    StyleElements = [seFont, seBorder]
+    OnClick = btnClearVisuallyClick
+    StyleClass = 'Charcoal Dark Slate'
+    ExplicitLeft = 183
+    ExplicitHeight = 76
+  end
+end

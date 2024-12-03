@@ -28,7 +28,7 @@ uses
   System.SysUtils,
 
   Vcl.ComCtrls,
-  Vcl.CustomizeDlg;
+  Vcl.CustomizeDlg, FireDAC.Phys.SQLiteVDataSet;
 
 type
   TdtModule = class(TDataModule)
@@ -36,12 +36,11 @@ type
     Conn: TFDConnection;
     t117_direitos_acesso: TFDTable;
     t118_direitos_acesso_usuarios: TFDTable;
-    DataSource1: TDataSource;
-    DataSource2: TDataSource;
+    srcT117: TDataSource;
+    srcT118: TDataSource;
     QuerySave: TFDQuery;
     QueryClearTable: TFDQuery;
     QueryDelete: TFDQuery;
-    QueryRefresh: TFDQuery;
     t117_direitos_acessot117_ca_codigo: TWideStringField;
     t117_direitos_acessot117_ca_descricao: TWideStringField;
     t117_direitos_acessot117_ca_nome_menu: TWideStringField;
@@ -61,7 +60,7 @@ type
     procedure CreateTable;
     procedure allChecks(UnCheck, Check: TStringList);
     procedure ClearTable;
-    procedure Save;
+    procedure Save(t117_ca_codigo, t118_ca_direito: String);
     procedure Delete;
     procedure Refresh;
     { Public declarations }
@@ -74,7 +73,7 @@ implementation
 
 uses
   Vcl.Dialogs,
-  Vcl.Forms;
+  Vcl.Forms, dlgClearDB;
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
@@ -84,50 +83,51 @@ procedure TdtModule.DataModuleCreate(Sender: TObject);
 begin
   try
   DriverPG.VendorLib := ExtractFilePath(Application.ExeName  + 'libpq.dll');
-  if Conn.Connected = False then
-  begin
-  Conn.Connected := True
-  //t117_direitos_acesso.Active := True;
-  //t118_direitos_acesso_usuarios.Active := True;
 
-  end
-  else
-  Conn.Connected := True;
-  //t117_direitos_acesso.Active := True;
-  //t118_direitos_acesso_usuarios.Active := True;
+    if Conn.Connected = False then
+    begin
+    Conn.Connected := True;
+    end
+    else
+    begin
+      Conn.Connected := True;
+    end;
+
+    // Tabelas não ativas são ativadas
+    t117_direitos_acesso.Active := True;
+    t118_direitos_acesso_usuarios.Active := True;
+
   finally
-    //dtModule.Free;
-  end;
 
+  end;
 end;
 
 procedure TdtModule.Update(const NumeroID, CheckedID: String);
 begin
   try
-    QueryInsert.SQL.Text :=
-      'INSERT INTO t118_direitos_acesso_usuarios (t117_ca_codigo, t118_ca_direito, t118_dt_ultima_alteracao) ' +
-      'VALUES (:NumeroID, :CheckedID, null) ' +
-      'ON CONFLICT (t117_ca_codigo) DO UPDATE SET ' +
-      't118_ca_direito = EXCLUDED.t118_ca_direito, ' +
-      't118_dt_ultima_alteracao = EXCLUDED.t118_dt_ultima_alteracao;';
-    QueryInsert.ParamByName('NumeroID').AsString := NumeroID;
-    QueryInsert.ParamByName('CheckedID').AsString := CheckedID;
-    QueryInsert.ExecSQL;
+    //QueryInsert.SQL.Text :=
+    //  '';
+    //QueryInsert.ParamByName('NumeroID').AsString := NumeroID;
+    //QueryInsert.ParamByName('CheckedID').AsString := CheckedID;
+    //QueryInsert.ExecSQL;
   except
     on E: Exception do
       ShowMessage('Erro ao atualizar direitos: ' + E.Message);
   end;
 end;
 
-procedure TdtModule.Save;
+procedure TdtModule.Save(t117_ca_codigo, t118_ca_direito: String);
 begin
-  QuerySave.SQL.Text := '';
+  QuerySave.SQL.Text := 'UPDATE t118_direitos_acesso_usuarios' +
+                         'SET t118_ca_direito='+quotedstr(t118_ca_direito) +
+                         'WHERE t003_nr_codigo=1 AND t117_ca_codigo='+quotedstr(t117_ca_codigo);
   ShowMessage('Salvo');
 end;
 
 procedure TdtModule.Refresh;
 begin
-  QueryRefresh.SQL.Text := '';
+  t117_direitos_acesso.RefreshMetadata;
+  t118_direitos_acesso_usuarios.RefreshMetadata;
   ShowMessage('Refresh');
 end;
 
@@ -145,13 +145,14 @@ end;
 
 procedure TdtModule.ClearTable;
 begin
-  QueryClearTable.SQL.Text := '';
+  //
   ShowMessage('Limpo');
 end;
 
 procedure TdtModule.CreateTable;
 begin
   QueryCreate.SQL.Text := '';
+  ShowMessage('Criado');
 end;
 
 procedure TdtModule.Delete;

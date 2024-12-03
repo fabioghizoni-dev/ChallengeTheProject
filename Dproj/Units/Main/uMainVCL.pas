@@ -34,7 +34,7 @@ uses
   Vcl.StdCtrls,
 
   Winapi.Messages,
-  Winapi.Windows;
+  Winapi.Windows, JvComponentBase, JvAppEvent, Vcl.ButtonStylesAttributes, Vcl.StyledButton;
 
 type
   TAcesso = class
@@ -51,10 +51,10 @@ type
     Grid2: TDBGrid;
     Grid: TDBGrid;
     treeView: TTreeView;
-    btnClear: TButton;
-    btnDelete: TButton;
-    btnRefresh: TButton;
-    btnSave: TButton;
+    btnClear: TStyledButton;
+    btnRefresh: TStyledButton;
+    btnDelete: TStyledButton;
+    btnSave: TStyledButton;
     procedure FormCreate(Sender: TObject);
     procedure treeViewCheckStateChanged(Sender: TCustomTreeView;
       Node: TTreeNode; CheckState: TNodeCheckState);
@@ -82,7 +82,7 @@ implementation
 uses
   uDB,
 
-  System.Math;
+  System.Math, dlgClearDB, dlgDeleteDB;
 
 { CONSTRUCTOR DA CLASSE IDENTIFICADORA DOS ITENS }
 constructor TAcesso.Create(const ATexto, ANumero, AChecked: String);
@@ -101,13 +101,14 @@ end;
 procedure TfrmMain.btnClearClick(Sender: TObject);
 begin
   inherited;
-  dtModule.ClearTable;
+  dlgLimpaBanco.Show;
+  //dtModule.ClearTable;
 end;
 
 procedure TfrmMain.btnDeleteClick(Sender: TObject);
 begin
   inherited;
-  dtModule.Delete;
+  dlgDeleteBanco.Show;
 end;
 
 procedure TfrmMain.btnRefreshClick(Sender: TObject);
@@ -119,7 +120,7 @@ end;
 procedure TfrmMain.btnSaveClick(Sender: TObject);
 begin
   inherited;
-  dtModule.Save;
+  //
 end;
 
 procedure TfrmMain.UpdateDB;
@@ -136,12 +137,12 @@ begin
     if Assigned(Acesso) then
     begin
       if Node.Checked then
-        Acesso.CheckedID := 'S'
+      begin
+        Acesso.CheckedID := 'S';
+      end
       else
         Acesso.CheckedID := 'N';
 
-      // Atualiza o banco de dados
-      dtModule.Update(Acesso.NumeroID, Acesso.CheckedID);
     end;
   end;
 end;
@@ -171,7 +172,7 @@ var
     NoMovimentos, NoFinanceiro, NoConsultar, NoEcommerce, NoMoviContas,
     NoReceberPagar, NoBoletos, NoControleCheques, NoConferenciaCaixa,
     NoConciCartoes, NoSupriCaixa, NoCashback, NoCadastro, NoFiscal,
-    NoNextPostos, NoCentralAcoes, NoCartaTroco, NoCombustivel,
+    NoNextPostos, NoCartaTroco, NoCombustivel,
     NoMoviCombustivel, NoMedicoes, NoCentral, NoCentralRela,
     NoNextPay: TTreeNode;
 begin
@@ -536,6 +537,7 @@ begin
         UnCheck.Add(Acesso.CheckedID);
       end;
     end;
+    btnSaveClick(Acesso);
     // Passa as listas ao método de persistência
     dtModule.allChecks(UnCheck, Check);
   finally

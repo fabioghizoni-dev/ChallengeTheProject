@@ -34,7 +34,7 @@ uses
   Vcl.StdCtrls,
 
   Winapi.Messages,
-  Winapi.Windows;
+  Winapi.Windows, JvComponentBase, JvAppEvent, Vcl.ButtonStylesAttributes, Vcl.StyledButton;
 
 type
   TAcesso = class
@@ -51,21 +51,23 @@ type
     Grid2: TDBGrid;
     Grid: TDBGrid;
     treeView: TTreeView;
-    btnClear: TButton;
-    btnDelete: TButton;
-    btnRefresh: TButton;
     btnSave: TButton;
+    btnClear: TStyledButton;
+    btnRefresh: TStyledButton;
+    btnDelete: TStyledButton;
+    StyledButton3: TStyledButton;
     procedure FormCreate(Sender: TObject);
     procedure treeViewCheckStateChanged(Sender: TCustomTreeView;
       Node: TTreeNode; CheckState: TNodeCheckState);
     procedure btnClearClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
     procedure btnRefreshClick(Sender: TObject);
-    procedure btnSaveClick(Sender: TObject);
+    procedure StyledButton3Click(Sender: TObject);
   private
     function CriarTreeViewItem(Parent: TTreeNode; const Text, NumeroID: String)
       : TTreeNode;
     procedure ListartreeView;
+    procedure UpdateDB;
     { Private declarations }
   public
     { Public declarations }
@@ -81,7 +83,7 @@ implementation
 uses
   uDB,
 
-  System.Math;
+  System.Math, dlgClearDB, dlgDeleteDB;
 
 { CONSTRUCTOR DA CLASSE IDENTIFICADORA DOS ITENS }
 constructor TAcesso.Create(const ATexto, ANumero, AChecked: String);
@@ -94,18 +96,20 @@ end;
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
   ListartreeView;
+  UpdateDB;
 end;
 
 procedure TfrmMain.btnClearClick(Sender: TObject);
 begin
   inherited;
-  dtModule.ClearTable;
+  dlgLimpaBanco.Show;
+  //dtModule.ClearTable;
 end;
 
 procedure TfrmMain.btnDeleteClick(Sender: TObject);
 begin
   inherited;
-  dtModule.Delete;
+  dlgDeleteBanco.Show;
 end;
 
 procedure TfrmMain.btnRefreshClick(Sender: TObject);
@@ -114,10 +118,34 @@ begin
   dtModule.Refresh;
 end;
 
-procedure TfrmMain.btnSaveClick(Sender: TObject);
+procedure TfrmMain.StyledButton3Click(Sender: TObject);
 begin
   inherited;
-  dtModule.Save;
+  //
+end;
+
+procedure TfrmMain.UpdateDB;
+var
+  I: Integer;
+  Node: TTreeNode;
+  Acesso: TAcesso;
+begin
+  for I := 0 to TreeView.Items.Count - 1 do
+  begin
+    Node := TreeView.Items[I];
+    Acesso := Node.Data;
+
+    if Assigned(Acesso) then
+    begin
+      if Node.Checked then
+      begin
+        Acesso.CheckedID := 'S';
+      end
+      else
+        Acesso.CheckedID := 'N';
+
+    end;
+  end;
 end;
 
 function TfrmMain.CriarTreeViewItem(Parent: TTreeNode;
@@ -145,7 +173,7 @@ var
     NoMovimentos, NoFinanceiro, NoConsultar, NoEcommerce, NoMoviContas,
     NoReceberPagar, NoBoletos, NoControleCheques, NoConferenciaCaixa,
     NoConciCartoes, NoSupriCaixa, NoCashback, NoCadastro, NoFiscal,
-    NoNextPostos, NoCentralAcoes, NoCartaTroco, NoCombustivel,
+    NoNextPostos, NoCartaTroco, NoCombustivel,
     NoMoviCombustivel, NoMedicoes, NoCentral, NoCentralRela,
     NoNextPay: TTreeNode;
 begin
@@ -510,6 +538,7 @@ begin
         UnCheck.Add(Acesso.CheckedID);
       end;
     end;
+    btnSaveClick(Acesso);
     // Passa as listas ao método de persistência
     dtModule.allChecks(UnCheck, Check);
   finally

@@ -1,0 +1,61 @@
+object dlgLimpaBanco: TdlgLimpaBanco
+  AlignWithMargins = True
+  Left = 227
+  Top = 108
+  Margins.Left = 0
+  Margins.Top = 0
+  Margins.Right = 0
+  Margins.Bottom = 0
+  BorderStyle = bsDialog
+  Caption = 'Deseja limpar o banco?'
+  ClientHeight = 86
+  ClientWidth = 370
+  Color = clBtnShadow
+  CustomTitleBar.CaptionAlignment = taCenter
+  TransparentColorValue = clGray
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  KeyPreview = True
+  Position = poScreenCenter
+  RoundedCorners = rcOff
+  StyleElements = [seFont]
+  TextHeight = 15
+  object btnClearDB: TStyledButton
+    AlignWithMargins = True
+    Left = 5
+    Top = 5
+    Width = 172
+    Height = 76
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    Align = alLeft
+    Caption = 'Sim, Limpar Banco!'
+    TabOrder = 0
+    OnClick = btnClearDBClick
+    StyleFamily = 'Angular-Dark'
+    StyleAppearance = 'Raised'
+  end
+  object btnClearVisually: TStyledButton
+    AlignWithMargins = True
+    Left = 183
+    Top = 5
+    Width = 182
+    Height = 76
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    Align = alRight
+    Caption = 'N'#227'o, Apenas Visualmente!'
+    TabOrder = 1
+    OnClick = btnClearVisuallyClick
+    StyleFamily = 'Angular-Dark'
+    StyleAppearance = 'Raised'
+    ExplicitLeft = 197
+  end
+end

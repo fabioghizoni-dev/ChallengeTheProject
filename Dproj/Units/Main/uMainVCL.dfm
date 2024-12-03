@@ -20,8 +20,6 @@ object frmMain: TfrmMain
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitLeft = -8
-    ExplicitTop = -8
     object Grid: TDBGrid
       AlignWithMargins = True
       Left = 422
@@ -32,7 +30,7 @@ object frmMain: TfrmMain
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
-      DataSource = dtModule.DataSource1
+      DataSource = dtModule.srcT117
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
@@ -43,16 +41,19 @@ object frmMain: TfrmMain
         item
           Expanded = False
           FieldName = 't117_ca_codigo'
+          Width = 100
           Visible = True
         end
         item
           Expanded = False
           FieldName = 't117_ca_descricao'
+          Width = 250
           Visible = True
         end
         item
           Expanded = False
           FieldName = 't117_ca_nome_menu'
+          Width = 300
           Visible = True
         end>
     end
@@ -66,7 +67,7 @@ object frmMain: TfrmMain
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
-      DataSource = dtModule.DataSource2
+      DataSource = dtModule.srcT118
       TabOrder = 1
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
@@ -75,23 +76,30 @@ object frmMain: TfrmMain
       TitleFont.Style = []
       Columns = <
         item
+          Alignment = taCenter
           Expanded = False
           FieldName = 't003_nr_codigo'
+          Width = 149
           Visible = True
         end
         item
           Expanded = False
           FieldName = 't117_ca_codigo'
+          Width = 100
           Visible = True
         end
         item
+          Alignment = taCenter
           Expanded = False
           FieldName = 't118_ca_direito'
+          Width = 150
           Visible = True
         end
         item
+          Alignment = taCenter
           Expanded = False
           FieldName = 't118_dt_ultima_alteracao'
+          Width = 250
           Visible = True
         end>
     end
@@ -543,41 +551,49 @@ object frmMain: TfrmMain
         000100000000000000000112460075006E00E700F50065007300200047006500
         720065006E0063006900610069007300}
     end
-    object btnClear: TButton
-      Left = 536
-      Top = 744
-      Width = 127
-      Height = 65
+    object btnClear: TStyledButton
+      Left = 513
+      Top = 758
+      Width = 120
+      Height = 50
       Caption = 'Clear'
       TabOrder = 3
+      StyleElements = [seFont, seBorder]
       OnClick = btnClearClick
+      StyleClass = 'Charcoal Dark Slate'
     end
-    object btnDelete: TButton
-      Left = 669
-      Top = 744
-      Width = 113
-      Height = 65
-      Caption = 'Delete'
-      TabOrder = 4
-      OnClick = btnDeleteClick
-    end
-    object btnRefresh: TButton
-      Left = 788
-      Top = 744
-      Width = 113
-      Height = 65
+    object btnRefresh: TStyledButton
+      Left = 765
+      Top = 758
+      Width = 120
+      Height = 50
       Caption = 'Refresh'
-      TabOrder = 5
+      TabOrder = 4
+      StyleElements = [seFont, seBorder]
       OnClick = btnRefreshClick
+      StyleClass = 'Charcoal Dark Slate'
     end
-    object btnSave: TButton
-      Left = 907
-      Top = 744
-      Width = 118
-      Height = 65
+    object btnDelete: TStyledButton
+      Left = 639
+      Top = 758
+      Width = 120
+      Height = 50
+      Caption = 'Delete'
+      TabOrder = 5
+      StyleElements = [seFont, seBorder]
+      OnClick = btnDeleteClick
+      StyleClass = 'Charcoal Dark Slate'
+    end
+    object btnSave: TStyledButton
+      Left = 891
+      Top = 758
+      Width = 120
+      Height = 50
       Caption = 'Save'
       TabOrder = 6
+      StyleElements = [seFont, seBorder]
       OnClick = btnSaveClick
+      StyleClass = 'Charcoal Dark Slate'
     end
   end
 end

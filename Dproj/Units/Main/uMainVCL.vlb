@@ -14,30 +14,18 @@ Coordinates=290,110,53,51
 [dtModule.t118_direitos_acesso_usuarios]
 Coordinates=10,0,215,123
 
-[dtModule.DataSource2]
-Coordinates=49,275,125,33
-
-[btnClear]
-Coordinates=160,130,56,51
-
-[btnRefresh]
-Coordinates=80,130,68,51
-
 [dtModule.t117_direitos_acesso]
 Coordinates=230,0,167,105
 
-[btnDelete]
-Coordinates=10,130,61,51
-
-[btnSave]
-Coordinates=230,110,54,51
-
-[dtModule.DataSource1]
-Coordinates=14,132,125,33
-
 []
-Coordinates=414,275,82,33
+Coordinates=230,110,54,51
 
 [dtModule.]
 Coordinates=410,120,104,51
+
+[dtModule.srcT117]
+Coordinates=14,132,125,33
+
+[dtModule.srcT118]
+Coordinates=49,275,125,33
 

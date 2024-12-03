@@ -82,7 +82,7 @@ implementation
 uses
   uDB,
 
-  System.Math;
+  System.Math, dlgClearDB;
 
 { CONSTRUCTOR DA CLASSE IDENTIFICADORA DOS ITENS }
 constructor TAcesso.Create(const ATexto, ANumero, AChecked: String);
@@ -101,7 +101,8 @@ end;
 procedure TfrmMain.btnClearClick(Sender: TObject);
 begin
   inherited;
-  dtModule.ClearTable;
+  dlgLimpaBanco.Show;
+  //dtModule.ClearTable;
 end;
 
 procedure TfrmMain.btnDeleteClick(Sender: TObject);
@@ -117,9 +118,11 @@ begin
 end;
 
 procedure TfrmMain.btnSaveClick(Sender: TObject);
+var
+  Acesso: TAcesso;
 begin
-  inherited;
-  dtModule.Save;
+  Acesso.CheckedID := 'S';
+  ShowMessage(Acesso.CheckedID);
 end;
 
 procedure TfrmMain.UpdateDB;
@@ -131,17 +134,17 @@ begin
   for I := 0 to TreeView.Items.Count - 1 do
   begin
     Node := TreeView.Items[I];
-    Acesso := Node.Data as TAcesso;
+    Acesso := Node.Data;
 
     if Assigned(Acesso) then
     begin
       if Node.Checked then
-        Acesso.CheckedID := 'S'
+      begin
+        Acesso.CheckedID := 'S';
+      end
       else
         Acesso.CheckedID := 'N';
 
-      // Atualiza o banco de dados
-      dtModule.AtualizarDireitos(Acesso.NumeroID, Acesso.CheckedID);
     end;
   end;
 end;
@@ -171,7 +174,7 @@ var
     NoMovimentos, NoFinanceiro, NoConsultar, NoEcommerce, NoMoviContas,
     NoReceberPagar, NoBoletos, NoControleCheques, NoConferenciaCaixa,
     NoConciCartoes, NoSupriCaixa, NoCashback, NoCadastro, NoFiscal,
-    NoNextPostos, NoCentralAcoes, NoCartaTroco, NoCombustivel,
+    NoNextPostos, NoCartaTroco, NoCombustivel,
     NoMoviCombustivel, NoMedicoes, NoCentral, NoCentralRela,
     NoNextPay: TTreeNode;
 begin
