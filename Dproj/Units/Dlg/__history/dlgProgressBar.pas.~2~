@@ -1,0 +1,43 @@
+unit dlgProgressBar;
+
+interface
+
+uses Winapi.Windows, System.SysUtils, System.Classes, Vcl.Graphics, Vcl.Forms,
+  Vcl.Controls, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.ComCtrls, JvExComCtrls, JvProgressBar;
+
+type
+  TfrmDlgPrgs = class(TForm)
+    timer: TTimer;
+    prgsBar: TJvProgressBar;
+    procedure timerTimer(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmDlgPrgs: TfrmDlgPrgs;
+
+implementation
+
+{$R *.dfm}
+
+{ TdlgConfirm }
+
+procedure TfrmDlgPrgs.FormCreate(Sender: TObject);
+begin
+  prgsBar.Min := 0;
+  prgsBar.Max := timer.Interval;
+end;
+
+procedure TfrmDlgPrgs.timerTimer(Sender: TObject);
+begin
+  if dlgConfirm.Active then
+  timer.Enabled := True;
+  timer.Interval := 4000;
+  dlgConfirm.Close;
+end;
+
+end.

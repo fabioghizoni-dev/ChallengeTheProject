@@ -14,6 +14,7 @@ uses
   FireDAC.Phys.Intf,
   FireDAC.Phys.PG,
   FireDAC.Phys.PGDef,
+  FireDAC.Phys.SQLiteVDataSet,
   FireDAC.Stan.Async,
   FireDAC.Stan.Def,
   FireDAC.Stan.Error,
@@ -28,7 +29,7 @@ uses
   System.SysUtils,
 
   Vcl.ComCtrls,
-  Vcl.CustomizeDlg, FireDAC.Phys.SQLiteVDataSet;
+  Vcl.CustomizeDlg;
 
 type
   TdtModule = class(TDataModule)
@@ -58,7 +59,7 @@ type
   public
     procedure Update(const NumeroID, CheckedID: String);
     procedure CreateTable;
-    procedure allChecks(UnCheck, Check: TStringList);
+    procedure allChecks;
     procedure ClearTable;
     procedure Save(t117_ca_codigo, t118_ca_direito: String);
     procedure Delete;
@@ -72,8 +73,10 @@ var
 implementation
 
 uses
+  dlgConfirmationDelete,
+
   Vcl.Dialogs,
-  Vcl.Forms, dlgClearDB;
+  Vcl.Forms;
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
@@ -82,8 +85,11 @@ uses
 procedure TdtModule.DataModuleCreate(Sender: TObject);
 begin
   try
-  DriverPG.VendorLib := ExtractFilePath(Application.ExeName  + 'libpq.dll');
-
+  {$IFDEF WIN32}
+  DriverPG.VendorHome := ExtractFilePath(Application.ExeName);
+  {$ELSE}
+  DriverPG.VendorLib := ExtractFilePath(Application.ExeName+'libpq.dll');
+  {$ENDIF}
     if Conn.Connected = False then
     begin
     Conn.Connected := True;
@@ -118,10 +124,11 @@ end;
 
 procedure TdtModule.Save(t117_ca_codigo, t118_ca_direito: String);
 begin
-  QuerySave.SQL.Text := 'UPDATE t118_direitos_acesso_usuarios' +
-                         'SET t118_ca_direito='+quotedstr(t118_ca_direito) +
-                         'WHERE t003_nr_codigo=1 AND t117_ca_codigo='+quotedstr(t117_ca_codigo);
-  ShowMessage('Salvo');
+ShowMessage(t117_ca_codigo + '          ' + t118_ca_direito);
+//  QuerySave.SQL.Text := 'UPDATE t118_direitos_acesso_usuarios' +
+//                         'SET t118_ca_direito='+quotedstr(t118_ca_direito) +
+//                         'WHERE t003_nr_codigo=1 AND t117_ca_codigo='+quotedstr(t117_ca_codigo);
+//  ShowMessage('Salvo');
 end;
 
 procedure TdtModule.Refresh;
@@ -131,22 +138,14 @@ begin
   ShowMessage('Refresh');
 end;
 
-procedure TdtModule.allChecks(UnCheck, Check: TStringList);
-var
-  i: Integer;
+procedure TdtModule.allChecks;
 begin
-  // Exibe os itens marcados e desmarcados
-  for i := 0 to Check.Count - 1 do
-    ShowMessage(Check[i]);
-
-  for i := 0 to UnCheck.Count - 1 do
-    ShowMessage(UnCheck[i]);
+  //
 end;
 
 procedure TdtModule.ClearTable;
 begin
   //
-  ShowMessage('Limpo');
 end;
 
 procedure TdtModule.CreateTable;

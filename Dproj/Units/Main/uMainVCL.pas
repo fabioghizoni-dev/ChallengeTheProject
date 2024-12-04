@@ -3,6 +3,8 @@ unit uMainVCL;
 interface
 
 uses
+  JvAppEvent,
+  JvComponentBase,
   uBase,
 
   Data.DB,
@@ -23,6 +25,7 @@ uses
   System.SysUtils,
   System.Variants,
 
+  Vcl.ButtonStylesAttributes,
   Vcl.ComCtrls,
   Vcl.Controls,
   Vcl.DBGrids,
@@ -32,9 +35,10 @@ uses
   Vcl.Graphics,
   Vcl.Grids,
   Vcl.StdCtrls,
+  Vcl.StyledButton,
 
   Winapi.Messages,
-  Winapi.Windows, JvComponentBase, JvAppEvent, Vcl.ButtonStylesAttributes, Vcl.StyledButton;
+  Winapi.Windows;
 
 type
   TAcesso = class
@@ -55,18 +59,17 @@ type
     btnRefresh: TStyledButton;
     btnDelete: TStyledButton;
     btnSave: TStyledButton;
+    pnlBtn: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure treeViewCheckStateChanged(Sender: TCustomTreeView;
       Node: TTreeNode; CheckState: TNodeCheckState);
     procedure btnClearClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
     procedure btnRefreshClick(Sender: TObject);
-    procedure btnSaveClick(Sender: TObject);
   private
     function CriarTreeViewItem(Parent: TTreeNode; const Text, NumeroID: String)
       : TTreeNode;
     procedure ListartreeView;
-    procedure UpdateDB;
     { Private declarations }
   public
     { Public declarations }
@@ -80,9 +83,10 @@ implementation
 {$R *.dfm}
 
 uses
+  dlgConfirmationDelete,
   uDB,
 
-  System.Math, dlgClearDB, dlgDeleteDB;
+  System.Math;
 
 { CONSTRUCTOR DA CLASSE IDENTIFICADORA DOS ITENS }
 constructor TAcesso.Create(const ATexto, ANumero, AChecked: String);
@@ -95,56 +99,25 @@ end;
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
   ListartreeView;
-  UpdateDB;
 end;
 
 procedure TfrmMain.btnClearClick(Sender: TObject);
 begin
   inherited;
-  dlgLimpaBanco.Show;
+  dlgConfirmDB.Show;
   //dtModule.ClearTable;
 end;
 
 procedure TfrmMain.btnDeleteClick(Sender: TObject);
 begin
   inherited;
-  dlgDeleteBanco.Show;
+  dlgConfirmDB.Show;
 end;
 
 procedure TfrmMain.btnRefreshClick(Sender: TObject);
 begin
   inherited;
   dtModule.Refresh;
-end;
-
-procedure TfrmMain.btnSaveClick(Sender: TObject);
-begin
-  inherited;
-  //
-end;
-
-procedure TfrmMain.UpdateDB;
-var
-  I: Integer;
-  Node: TTreeNode;
-  Acesso: TAcesso;
-begin
-  for I := 0 to TreeView.Items.Count - 1 do
-  begin
-    Node := TreeView.Items[I];
-    Acesso := Node.Data;
-
-    if Assigned(Acesso) then
-    begin
-      if Node.Checked then
-      begin
-        Acesso.CheckedID := 'S';
-      end
-      else
-        Acesso.CheckedID := 'N';
-
-    end;
-  end;
 end;
 
 function TfrmMain.CriarTreeViewItem(Parent: TTreeNode;
@@ -515,34 +488,41 @@ procedure TfrmMain.treeViewCheckStateChanged(Sender: TCustomTreeView;
 var
   Check, UnCheck: TStringList;
   Acesso: TAcesso;
+  i: Integer;
 begin
   inherited;
   Check := TStringList.Create;
   UnCheck := TStringList.Create;
+
   try
+    Node.Selected := True;
     // Recupera o objeto associado ao nó
     Acesso := TAcesso(Node.Data);
-    if Assigned(Acesso) then
+    for i := 0 to treeView.Items.Count - 1 do
     begin
-      // Marcado
-      if Node.Checked then
+    Node := treeView.Items[i];
+      if Assigned(Acesso) then
       begin
-        Acesso.CheckedID := 'S';
-        Check.Add(Acesso.CheckedID); // Adiciona o ID associado ao nó
-      end
-      else
-      begin
-        // Desmarcado
-        Acesso.CheckedID := 'N';
-        UnCheck.Add(Acesso.CheckedID);
+
+        if Node.Checked = False then
+        begin
+          // Desmarcado
+          Acesso.CheckedID := 'N';
+          UnCheck.Add(Acesso.NumeroID + Acesso.CheckedID);
+        end;
+
+        // Marcado
+        if Node.Checked = True then
+        begin
+          Acesso.CheckedID := 'S';
+          Check.Add(Acesso.NumeroID + Acesso.CheckedID); // Adiciona o ID associado ao nó
+        end;
+
       end;
     end;
-    btnSaveClick(Acesso);
-    // Passa as listas ao método de persistência
-    dtModule.allChecks(UnCheck, Check);
+      //dtModule.Save(Check.Text, UnCheck.Text);
   finally
-    Check.Free;
-    UnCheck.Free;
+
   end;
 end;
 

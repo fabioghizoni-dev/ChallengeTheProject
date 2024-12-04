@@ -1,0 +1,10 @@
+﻿[prgsBar]
+Coordinates=85,10,60,58
+Visible=True
+
+[timer]
+Coordinates=16,77,43,36
+
+[]
+Coordinates=10,10,65,58
+
