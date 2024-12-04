@@ -8,8 +8,6 @@ object frmDlgPrgs: TfrmDlgPrgs
   ParentFont = True
   Position = poScreenCenter
   RoundedCorners = rcOn
-  OnClose = FormClose
-  OnCreate = FormCreate
   TextHeight = 15
   object prgsBar: TJvProgressBar
     AlignWithMargins = True
@@ -26,7 +24,6 @@ object frmDlgPrgs: TfrmDlgPrgs
     TabOrder = 0
     Marquee = True
     MarqueeDelay = 15
-    ExplicitWidth = 348
   end
   object timer: TTimer
     Interval = 4000

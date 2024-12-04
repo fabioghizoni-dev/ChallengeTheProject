@@ -110,25 +110,36 @@ end;
 
 procedure TdtModule.Update(const NumeroID, CheckedID: String);
 begin
-  try
+//  try
     //QueryInsert.SQL.Text :=
     //  '';
     //QueryInsert.ParamByName('NumeroID').AsString := NumeroID;
     //QueryInsert.ParamByName('CheckedID').AsString := CheckedID;
     //QueryInsert.ExecSQL;
-  except
-    on E: Exception do
-      ShowMessage('Erro ao atualizar direitos: ' + E.Message);
-  end;
+//  except
+//    on E: Exception do
+//      ShowMessage('Erro ao atualizar direitos: ' + E.Message);
+//  end;
 end;
 
 procedure TdtModule.Save(t117_ca_codigo, t118_ca_direito: String);
 begin
-ShowMessage(t117_ca_codigo + '          ' + t118_ca_direito);
-//  QuerySave.SQL.Text := 'UPDATE t118_direitos_acesso_usuarios' +
-//                         'SET t118_ca_direito='+quotedstr(t118_ca_direito) +
-//                         'WHERE t003_nr_codigo=1 AND t117_ca_codigo='+quotedstr(t117_ca_codigo);
-//  ShowMessage('Salvo');
+  try
+    QuerySave.SQL.Text :=
+
+     'UPDATE t118_direitos_acesso_usuarios ' +
+     'SET t118_ca_direito = ' + QuotedStr(t118_ca_direito) + ' ' +
+     'WHERE t003_nr_codigo = 1 AND t117_ca_codigo = ' + QuotedStr(t117_ca_codigo);
+
+
+    QuerySave.ExecSQL;
+
+  except
+
+    on E: Exception do
+    ShowMessage('Erro ao atualizar direitos: ' + E.Message);
+
+  end;
 end;
 
 procedure TdtModule.Refresh;

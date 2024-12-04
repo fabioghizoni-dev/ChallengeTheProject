@@ -1,12 +1,5 @@
-﻿[Grid]
-Coordinates=70,190,40,33
-
-[treeView]
+﻿[treeView]
 Coordinates=10,190,56,33
-
-[Grid2]
-Coordinates=350,110,41,33
-Visible=True
 
 [pnlMain]
 Coordinates=290,110,53,51
@@ -18,7 +11,8 @@ Coordinates=10,0,215,123
 Coordinates=230,0,167,105
 
 []
-Coordinates=230,110,54,51
+Coordinates=350,110,41,33
+Visible=True
 
 [dtModule.]
 Coordinates=410,120,104,51

@@ -22,6 +22,7 @@ type
     btnYes: TStyledButton;
     btnNo: TStyledButton;
     procedure btnYesClick(Sender: TObject);
+    procedure btnNoClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -40,12 +41,13 @@ uses
 
 procedure TdlgConfirmDB.btnYesClick(Sender: TObject);
 begin
-  try
-    dlgConfirmDB.Close;
-    frmDlgPrgs.Show;
-  finally
-    //dlgConfirmDB.Free;
-  end;
+  dlgProgressBar.frmDlgPrgs.Show;
+  dlgConfirmDB.Close;
+end;
+
+procedure TdlgConfirmDB.btnNoClick(Sender: TObject);
+begin
+  dlgConfirmDB.Close;
 end;
 
 end.

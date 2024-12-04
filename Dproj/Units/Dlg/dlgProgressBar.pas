@@ -24,8 +24,6 @@ type
     timer: TTimer;
     prgsBar: TJvProgressBar;
     procedure timerTimer(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -39,31 +37,15 @@ implementation
 
 {$R *.dfm}
 
-{ TdlgConfirm }
+uses dlgConfirmationDelete;
 
-procedure TfrmDlgPrgs.FormCreate(Sender: TObject);
-begin
-  try
-    prgsBar.Min := 0;
-  finally
-    prgsBar.Max := timer.Interval;
-  end;
-end;
+{ TdlgConfirm }
 
 procedure TfrmDlgPrgs.timerTimer(Sender: TObject);
 begin
-  try
-    if frmDlgPrgs.Active then
-    timer.Enabled := True;
-    timer.Interval := 4000;
-  finally
-    frmDlgPrgs.Close;
-  end;
-end;
-
-procedure TfrmDlgPrgs.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  FreeAndNil(frmDlgPrgs);
+  timer.Interval := 4000;
+  timer.Enabled := True;
+  frmDlgPrgs.Close;
 end;
 
 end.

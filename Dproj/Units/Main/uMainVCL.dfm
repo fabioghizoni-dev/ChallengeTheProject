@@ -12,6 +12,7 @@ object frmMain: TfrmMain
   Font.Style = []
   KeyPreview = True
   OnCreate = FormCreate
+  OnShow = FormShow
   TextHeight = 15
   object pnlMain: TPanel
     Left = 0
@@ -21,95 +22,12 @@ object frmMain: TfrmMain
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    object Grid: TDBGrid
-      AlignWithMargins = True
-      Left = 422
-      Top = 0
-      Width = 685
-      Height = 373
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      DataSource = dtModule.srcT117
-      TabOrder = 0
-      TitleFont.Charset = DEFAULT_CHARSET
-      TitleFont.Color = clWindowText
-      TitleFont.Height = -12
-      TitleFont.Name = 'Segoe UI'
-      TitleFont.Style = []
-      Columns = <
-        item
-          Expanded = False
-          FieldName = 't117_ca_codigo'
-          Width = 100
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 't117_ca_descricao'
-          Width = 250
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 't117_ca_nome_menu'
-          Width = 300
-          Visible = True
-        end>
-    end
-    object Grid2: TDBGrid
-      AlignWithMargins = True
-      Left = 422
-      Top = 375
-      Width = 685
-      Height = 368
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      DataSource = dtModule.srcT118
-      TabOrder = 1
-      TitleFont.Charset = DEFAULT_CHARSET
-      TitleFont.Color = clWindowText
-      TitleFont.Height = -12
-      TitleFont.Name = 'Segoe UI'
-      TitleFont.Style = []
-      Columns = <
-        item
-          Alignment = taCenter
-          Expanded = False
-          FieldName = 't003_nr_codigo'
-          Width = 149
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 't117_ca_codigo'
-          Width = 100
-          Visible = True
-        end
-        item
-          Alignment = taCenter
-          Expanded = False
-          FieldName = 't118_ca_direito'
-          Width = 150
-          Visible = True
-        end
-        item
-          Alignment = taCenter
-          Expanded = False
-          FieldName = 't118_dt_ultima_alteracao'
-          Width = 250
-          Visible = True
-        end>
-    end
     object treeView: TTreeView
       AlignWithMargins = True
       Left = 0
       Top = 0
       Width = 417
-      Height = 824
+      Height = 728
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -117,7 +35,7 @@ object frmMain: TfrmMain
       Align = alLeft
       CheckBoxes = True
       Indent = 19
-      TabOrder = 2
+      TabOrder = 0
       OnCheckStateChanged = treeViewCheckStateChanged
       Items.NodeData = {
         070900000009540054007200650065004E006F00640065003100000000000000
@@ -551,58 +469,74 @@ object frmMain: TfrmMain
         005000610079000000430000000000000000000000FFFFFFFFFFFFFFFF000000
         000100000000000000000112460075006E00E700F50065007300200047006500
         720065006E0063006900610069007300}
+      ExplicitHeight = 824
     end
     object pnlBtn: TPanel
-      Left = 504
-      Top = 746
-      Width = 520
-      Height = 73
+      AlignWithMargins = True
+      Left = 600
+      Top = 728
+      Width = 502
+      Height = 81
+      Margins.Left = 600
+      Margins.Top = 0
+      Margins.Right = 5
+      Margins.Bottom = 15
+      Align = alBottom
       BevelOuter = bvNone
       Padding.Left = 20
+      Padding.Top = 10
       Padding.Right = 20
       ParentBackground = False
-      TabOrder = 3
+      TabOrder = 1
+      ExplicitLeft = 5
+      ExplicitWidth = 402
       object btnClear: TStyledButton
         AlignWithMargins = True
-        Left = 140
-        Top = 5
-        Width = 120
-        Height = 63
+        Left = 162
+        Top = 15
+        Width = 108
+        Height = 61
         Margins.Left = 0
         Margins.Top = 5
         Margins.Right = 0
         Margins.Bottom = 5
-        Align = alLeft
-        Caption = 'Clear'
+        Align = alRight
+        Caption = 'Limpar Registros'
         TabOrder = 0
         StyleElements = [seFont, seBorder]
         OnClick = btnClearClick
         StyleClass = 'Charcoal Dark Slate'
+        ExplicitLeft = 106
+        ExplicitTop = 5
+        ExplicitHeight = 71
       end
       object btnDelete: TStyledButton
         AlignWithMargins = True
-        Left = 20
-        Top = 5
-        Width = 120
-        Height = 63
+        Left = 53
+        Top = 15
+        Width = 109
+        Height = 61
         Margins.Left = 0
         Margins.Top = 5
         Margins.Right = 0
         Margins.Bottom = 5
-        Align = alLeft
-        Caption = 'Delete'
+        Align = alRight
+        Caption = 'Excluir Banco'
         Default = True
         TabOrder = 1
         StyleElements = [seFont, seBorder]
         OnClick = btnDeleteClick
         StyleClass = 'Charcoal Dark Slate'
+        ExplicitLeft = 20
+        ExplicitTop = 5
+        ExplicitHeight = 71
       end
       object btnRefresh: TStyledButton
         AlignWithMargins = True
-        Left = 260
-        Top = 5
-        Width = 120
-        Height = 63
+        Left = 270
+        Top = 15
+        Width = 106
+        Height = 61
         Margins.Left = 0
         Margins.Top = 5
         Margins.Right = 0
@@ -613,13 +547,16 @@ object frmMain: TfrmMain
         StyleElements = [seFont, seBorder]
         OnClick = btnRefreshClick
         StyleClass = 'Charcoal Dark Slate'
+        ExplicitLeft = 201
+        ExplicitTop = 5
+        ExplicitHeight = 126
       end
       object btnSave: TStyledButton
         AlignWithMargins = True
-        Left = 380
-        Top = 5
-        Width = 120
-        Height = 63
+        Left = 376
+        Top = 15
+        Width = 106
+        Height = 61
         Margins.Left = 0
         Margins.Top = 5
         Margins.Right = 0
@@ -628,7 +565,47 @@ object frmMain: TfrmMain
         Caption = 'Save'
         TabOrder = 3
         StyleElements = [seFont, seBorder]
+        OnClick = btnSaveClick
         StyleClass = 'Charcoal Dark Slate'
+        ExplicitTop = 5
+        ExplicitHeight = 71
+      end
+    end
+    object pnlGrids: TPanel
+      AlignWithMargins = True
+      Left = 422
+      Top = 0
+      Width = 685
+      Height = 728
+      Margins.Left = 5
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      Align = alClient
+      BevelOuter = bvNone
+      TabOrder = 2
+      ExplicitLeft = 568
+      ExplicitTop = 272
+      ExplicitWidth = 185
+      ExplicitHeight = 41
+      inline gridsFrameEmbeded: TgridsFrame
+        AlignWithMargins = True
+        Left = 0
+        Top = 0
+        Width = 685
+        Height = 728
+        Margins.Left = 0
+        Margins.Top = 0
+        Margins.Right = 0
+        Margins.Bottom = 0
+        Align = alClient
+        TabOrder = 0
+        inherited Grid: TDBGrid
+          Height = 354
+        end
+        inherited Grid2: TDBGrid
+          Top = 354
+        end
       end
     end
   end

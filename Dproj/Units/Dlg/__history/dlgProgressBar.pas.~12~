@@ -1,0 +1,43 @@
+unit dlgProgressBar;
+
+interface
+
+uses
+  JvExComCtrls,
+  JvProgressBar,
+
+  System.Classes,
+  System.SysUtils,
+
+  Vcl.Buttons,
+  Vcl.ComCtrls,
+  Vcl.Controls,
+  Vcl.ExtCtrls,
+  Vcl.Forms,
+  Vcl.Graphics,
+  Vcl.StdCtrls,
+
+  Winapi.Windows;
+
+type
+  TfrmDlgPrgs = class(TForm)
+    timer: TTimer;
+    prgsBar: TJvProgressBar;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmDlgPrgs: TfrmDlgPrgs;
+
+implementation
+
+{$R *.dfm}
+
+uses dlgConfirmationDelete;
+
+{ TdlgConfirm }
+
+end.
