@@ -43,10 +43,10 @@ uses
 type
   TAcesso = class
   public
-    TextoID: String;
+    TextID: String;
     NumeroID: String;
     CheckedID: String;
-    constructor Create(const ATexto, ANumero, AChecked: String);
+    constructor Create(const AText, ANumero, AChecked: String);
   end;
 
 type
@@ -60,19 +60,23 @@ type
     pnlBtn: TPanel;
     pnlGrids: TPanel;
     gridsFrameEmbeded: TgridsFrame;
+    StyledButton1: TStyledButton;
     procedure FormCreate(Sender: TObject);
     procedure treeViewCheckStateChanged(Sender: TCustomTreeView;
       Node: TTreeNode; CheckState: TNodeCheckState);
     procedure btnClearClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
     procedure btnRefreshClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure btnSaveClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     function CriarTreeViewItem(Parent: TTreeNode; const Text, NumeroID: String)
       : TTreeNode;
+    procedure NodeCheckedAlter(Node: TTreeNode; Acesso: TAcesso);
+    procedure PercorrerTreeView(Sender: TCustomTreeView; Node: TTreeNode; CheckState:
+    TNodeCheckState; Acesso: TAcesso);
     procedure ListartreeView;
-    procedure PercorrerTreeView;
+
     { Private declarations }
   public
     { Public declarations }
@@ -92,24 +96,32 @@ uses
   System.Math;
 
 { CONSTRUCTOR DA CLASSE IDENTIFICADORA DOS ITENS }
-constructor TAcesso.Create(const ATexto, ANumero, AChecked: String);
+constructor TAcesso.Create(const AText, ANumero, AChecked: String);
 begin
-  TextoID := ATexto;
+  TextID := AText;
   NumeroID := ANumero;
   CheckedID := AChecked;
 end;
 
+{ FORM CREATE }
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
+  // Cria a lista
   ListartreeView;
 end;
 
+{ FORM SHOW }
 procedure TfrmMain.FormShow(Sender: TObject);
+//var
+//  Node: TTreeNode;
+//  Acesso: TAcesso;
 begin
   inherited;
-  PercorrerTreeView;
+  // Percorre a lista
+  //PercorrerTreeView(treeView, Node, ncsUnchecked, Acesso);
 end;
 
+{ BOTÃO CLEAR CLICK }
 procedure TfrmMain.btnClearClick(Sender: TObject);
 begin
   inherited;
@@ -117,45 +129,49 @@ begin
   //dtModule.ClearTable;
 end;
 
+{ BOTÃO DELETE CLICK }
 procedure TfrmMain.btnDeleteClick(Sender: TObject);
 begin
   inherited;
   dlgConfirmDB.Show;
 end;
 
+{ BOTÃO REFRESH CLICK }
 procedure TfrmMain.btnRefreshClick(Sender: TObject);
 begin
   inherited;
   dtModule.Refresh;
 end;
 
+{ BOTÃO SAVE CLICK }
 procedure TfrmMain.btnSaveClick(Sender: TObject);
-var
-	Acesso: TAcesso;
-  Node: TTreeNode;
-  i: Integer;
+//var
+//	Acesso: TAcesso;
+//  Node: TTreeNode;
+//  i: Integer;
 begin
   inherited;
 
-  for i := 0 to treeView.Items.Count - 1 do
-
-  begin
-    Node := treeView.Items[i];
-    Acesso := TAcesso(Node.Data);
-    Acesso.CheckedID := 'N';
-
-    try
-    if Assigned(Acesso) then
-    dtModule.Save(Acesso.NumeroID, Acesso.CheckedID);
-    finally
-    Acesso.Free;
-    Node.Free;
-    end;
-
-  end;
+//  for i := 0 to treeView.Items.Count - 1 do
+//
+//  begin
+//    Node := treeView.Items[i];
+//    Acesso := TAcesso(Node.Data);
+//    Acesso.CheckedID := 'N';
+//
+//    try
+//    if Assigned(Acesso) then
+//    dtModule.Save(Acesso.NumeroID, Acesso.CheckedID);
+//    finally
+//    //Acesso.Free;
+//    //Node.Free;
+//    end;
+//
+//  end;
 
 end;
 
+{ FUNÇÃO PARA CRIAR O TREEVIEW }
 function TfrmMain.CriarTreeViewItem(Parent: TTreeNode;
   const Text, NumeroID: String): TTreeNode;
 var
@@ -170,7 +186,7 @@ begin
       Result := treeView.Items.AddObject(nil, Text, Acesso);
     end;
   finally
-    //Acesso.Free;
+
   end;
 
 end;
@@ -523,101 +539,57 @@ begin
   end;
 end;
 
-procedure TfrmMain.PercorrerTreeView;
-var
-  Check, UnCheck: TStringList;
-  Acesso: TAcesso;
-  Node: TTreeNode;
-  i: Integer;
+{ PERCORRE A LISTA E VERIFICA OS CHECKS }
+procedure TfrmMain.PercorrerTreeView(Sender: TCustomTreeView; Node: TTreeNode; CheckState:
+TNodeCheckState; Acesso: TAcesso);
 begin
-  Check := TStringList.Create;
-  UnCheck := TStringList.Create;
+  //
+end;
+
+{ MUDA O ESTADO DO CHECK DE S OU N }
+procedure TfrmMain.NodeCheckedAlter(Node: TTreeNode; Acesso: TAcesso);
+begin
 
   try
-    // Loop para percorrer todos os nós do TreeView
-    for i := 0 to treeView.Items.Count - 1 do
+    // Recupera o objeto associado ao nó
+    Acesso := TAcesso(Node.Data);
+
     begin
-      Node := treeView.Items[i];
-
-      // Recupera o objeto associado ao nó
-      Acesso := TAcesso(Node.Data);
-
       if Assigned(Acesso) then
       begin
         // Desmarcado
-        if not Node.Checked then
+        if Node.Checked = False then
         begin
-
-          UnCheck.Add(Acesso.NumeroID + Acesso.CheckedID);
+          Acesso.CheckedID := 'N';
+          ShowMessage('Desmarcado: ' + Acesso.CheckedID);
         end
         // Marcado
         else
         begin
-
-          Check.Add(Acesso.NumeroID + Acesso.CheckedID);
+          Acesso.CheckedID := 'S';
+          ShowMessage('Marcado: ' + Acesso.CheckedID);
         end;
-
-        //ShowMessage(Acesso.TextoID + Acesso.NumeroID + Acesso.CheckedID);
-        btnSaveClick(Acesso);
       end;
     end;
 
-
   finally
-    Check.Free;
-    UnCheck.Free;
+    //Check.Free;
+    //UnCheck.Free;
   end;
 end;
 
-
+{ AO CLICAR NO CECK DO TTREENODE }
 procedure TfrmMain.treeViewCheckStateChanged(Sender: TCustomTreeView;
   Node: TTreeNode; CheckState: TNodeCheckState);
-//var
-//  Check, UnCheck: TStringList;
-//  Acesso: TAcesso;
-//  i: Integer;
+var
+  Acesso: TAcesso;
 begin
   inherited;
-//  Check := TStringList.Create;
-//  UnCheck := TStringList.Create;
-//
-//  try
-//
-//    Node.Selected := True;
-//
-//    // Recupera o objeto associado ao nó
-//    Acesso := TAcesso(Node.Data);
-//
-//    // Loop
-//    for i := 0 to treeView.Items.Count - 1 do
-//    begin
-//    Node := treeView.Items[i];
-//      if Assigned(Acesso) then
-//      begin
-//
-//        // Desmarcado
-//        if Node.Checked = False then
-//        begin
-//          Acesso.CheckedID := 'N';
-//          UnCheck.Add(Node.Text + ' ' + Acesso.CheckedID);
-//        end;
-//
-//        // Marcado
-//        if Node.Checked = True then
-//        begin
-//          Acesso.CheckedID := 'S';
-//          Check.Add(Node.Text + ' ' + Acesso.CheckedID);
-//        end;
-//
-//      end;
-//    end;
-//    ShowMessage(Check.text);
-//  finally
-//
-//  Check.Free;
-//  UnCheck.Free;
-//
-//  end;
+  Node.Selected := True;
+
+  Acesso := TAcesso(Node.Data);
+
+  NodeCheckedAlter(Node, Acesso);
 end;
 
 end.

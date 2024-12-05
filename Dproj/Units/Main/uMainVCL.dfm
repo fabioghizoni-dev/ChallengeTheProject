@@ -469,15 +469,14 @@ object frmMain: TfrmMain
         005000610079000000430000000000000000000000FFFFFFFFFFFFFFFF000000
         000100000000000000000112460075006E00E700F50065007300200047006500
         720065006E0063006900610069007300}
-      ExplicitHeight = 824
     end
     object pnlBtn: TPanel
       AlignWithMargins = True
-      Left = 600
+      Left = 500
       Top = 728
-      Width = 502
+      Width = 602
       Height = 81
-      Margins.Left = 600
+      Margins.Left = 500
       Margins.Top = 0
       Margins.Right = 5
       Margins.Bottom = 15
@@ -488,13 +487,13 @@ object frmMain: TfrmMain
       Padding.Right = 20
       ParentBackground = False
       TabOrder = 1
-      ExplicitLeft = 5
-      ExplicitWidth = 402
+      ExplicitLeft = 600
+      ExplicitWidth = 502
       object btnClear: TStyledButton
         AlignWithMargins = True
-        Left = 162
+        Left = 252
         Top = 15
-        Width = 108
+        Width = 110
         Height = 61
         Margins.Left = 0
         Margins.Top = 5
@@ -506,15 +505,13 @@ object frmMain: TfrmMain
         StyleElements = [seFont, seBorder]
         OnClick = btnClearClick
         StyleClass = 'Charcoal Dark Slate'
-        ExplicitLeft = 106
-        ExplicitTop = 5
-        ExplicitHeight = 71
+        ExplicitLeft = 262
       end
       object btnDelete: TStyledButton
         AlignWithMargins = True
-        Left = 53
+        Left = 142
         Top = 15
-        Width = 109
+        Width = 110
         Height = 61
         Margins.Left = 0
         Margins.Top = 5
@@ -527,15 +524,13 @@ object frmMain: TfrmMain
         StyleElements = [seFont, seBorder]
         OnClick = btnDeleteClick
         StyleClass = 'Charcoal Dark Slate'
-        ExplicitLeft = 20
-        ExplicitTop = 5
-        ExplicitHeight = 71
+        ExplicitLeft = 153
       end
       object btnRefresh: TStyledButton
         AlignWithMargins = True
-        Left = 270
+        Left = 362
         Top = 15
-        Width = 106
+        Width = 110
         Height = 61
         Margins.Left = 0
         Margins.Top = 5
@@ -547,15 +542,13 @@ object frmMain: TfrmMain
         StyleElements = [seFont, seBorder]
         OnClick = btnRefreshClick
         StyleClass = 'Charcoal Dark Slate'
-        ExplicitLeft = 201
-        ExplicitTop = 5
-        ExplicitHeight = 126
+        ExplicitLeft = 370
       end
       object btnSave: TStyledButton
         AlignWithMargins = True
-        Left = 376
+        Left = 472
         Top = 15
-        Width = 106
+        Width = 110
         Height = 61
         Margins.Left = 0
         Margins.Top = 5
@@ -567,8 +560,26 @@ object frmMain: TfrmMain
         StyleElements = [seFont, seBorder]
         OnClick = btnSaveClick
         StyleClass = 'Charcoal Dark Slate'
-        ExplicitTop = 5
-        ExplicitHeight = 71
+        ExplicitLeft = 476
+      end
+      object StyledButton1: TStyledButton
+        AlignWithMargins = True
+        Left = 32
+        Top = 15
+        Width = 110
+        Height = 61
+        Margins.Left = 0
+        Margins.Top = 5
+        Margins.Right = 0
+        Margins.Bottom = 5
+        Align = alRight
+        Caption = 'Excluir Banco'
+        Default = True
+        TabOrder = 4
+        StyleElements = [seFont, seBorder]
+        OnClick = btnDeleteClick
+        StyleClass = 'Charcoal Dark Slate'
+        ExplicitLeft = 33
       end
     end
     object pnlGrids: TPanel
@@ -584,10 +595,6 @@ object frmMain: TfrmMain
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 2
-      ExplicitLeft = 568
-      ExplicitTop = 272
-      ExplicitWidth = 185
-      ExplicitHeight = 41
       inline gridsFrameEmbeded: TgridsFrame
         AlignWithMargins = True
         Left = 0
@@ -600,11 +607,15 @@ object frmMain: TfrmMain
         Margins.Bottom = 0
         Align = alClient
         TabOrder = 0
+        ExplicitWidth = 685
+        ExplicitHeight = 728
         inherited Grid: TDBGrid
+          Width = 685
           Height = 354
         end
         inherited Grid2: TDBGrid
           Top = 354
+          Width = 685
         end
       end
     end
